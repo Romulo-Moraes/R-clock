@@ -84,7 +84,7 @@ And for date rainbow mode there's just one theme:
 --date-color or -d Rainbow
 ```
 
-### Rclock using the flags -c Rainbow2 -d Rainbow
+### Rclock using the flags: -c Rainbow2 -d Rainbow
 <div align="center">
     <img src="./assets/Rainbow.png">
 </div>
@@ -121,6 +121,14 @@ setting a costum year, the value here can be a negative or positive number
 ```sh
 --year or -y <YEAR>
 ```
+
+### Rclock using the flags: --hour 2 --minute 1 --second 50 --day 2 --month 2 --year 2
+
+<div align="center">
+    <img src="./assets/rclock custom time.png">
+</div>
+
+Some seconds before to give the time for take a screenshot
 
 ## Goodbye
 
