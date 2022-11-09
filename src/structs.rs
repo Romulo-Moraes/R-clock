@@ -1,9 +1,30 @@
 use clap::Parser;
-use termcolor::Color;
+
+use termcolor::{Color};
 
 // Constant string used in clap library, show all available 
 // colors for this program
-const AVAILABLE_COLORS : &str = "Black\nGray\nBlue\nCyan\nGreen\nMagenta\nRed\nWhite\nYellow\nBrightBlue\nBrightCyan\nBrightGreen\nBrightMagenta\nBrightRed\nBrightWhite\nBrightYellow\n";
+const AVAILABLE_COLORS_FOR_CLOCK : &str = "Black\nGray\nBlue\nCyan\nGreen\nMagenta\nRed\nWhite\nYellow\nBrightBlue\nBrightCyan\nBrightGreen\nBrightMagenta\nBrightRed\nBrightWhite\nBrightYellow\nRainbow\nRainbow2\n";
+const AVAILABLE_COLORS_FOR_DATE : &str = "Black\nGray\nBlue\nCyan\nGreen\nMagenta\nRed\nWhite\nYellow\nBrightBlue\nBrightCyan\nBrightGreen\nBrightMagenta\nBrightRed\nBrightWhite\nBrightYellow\nRainbow\n";
+
+const RAINBOW_RED_FOR_CLOCK : Color = Color::Rgb(150, 0, 0);
+const RAINBOW_ORANGE_FOR_CLOCK : Color = Color::Rgb(255, 127, 0);
+const RAINBOW_YELLOW_FOR_CLOCK : Color = Color::Rgb(255, 255, 0);
+const RAINBOW_GREEN_FOR_CLOCK : Color = Color::Rgb(0, 150, 0);
+const RAINBOW_BLUE_FOR_CLOCK : Color = Color::Rgb(0, 0, 255);
+const RAINBOW_INDIGO_FOR_CLOCK : Color = Color::Rgb(75, 0, 130);
+const RAINBOW_VIOLET_FOR_CLOCK : Color = Color::Rgb(148, 0, 211);
+
+const RAINBOW_RED_FOR_DATE : Color = Color::Rgb(255, 0, 0);
+const RAINBOW_ORANGE_FOR_DATE : Color = Color::Rgb(255, 127, 0);
+const RAINBOW_YELLOW_FOR_DATE : Color = Color::Rgb(255, 255, 0);
+const RAINBOW_GREEN_FOR_DATE : Color = Color::Rgb(0, 255, 0);
+const RAINBOW_BLUE_FOR_DATE : Color = Color::Rgb(0, 0, 255);
+const RAINBOW_INDIGO_FOR_DATE : Color = Color::Rgb(75, 0, 130);
+const RAINBOW_VIOLET_FOR_DATE : Color = Color::Rgb(148, 0, 211);
+
+pub const RAINBOW_STRUCT_FOR_CLOCK : [Color; 7] = [RAINBOW_RED_FOR_CLOCK, RAINBOW_ORANGE_FOR_CLOCK, RAINBOW_YELLOW_FOR_CLOCK , RAINBOW_GREEN_FOR_CLOCK, RAINBOW_BLUE_FOR_CLOCK, RAINBOW_INDIGO_FOR_CLOCK , RAINBOW_VIOLET_FOR_CLOCK];
+pub const RAINBOW_STRUCT_FOR_DATE : [Color; 7] = [RAINBOW_RED_FOR_DATE, RAINBOW_ORANGE_FOR_DATE, RAINBOW_YELLOW_FOR_DATE, RAINBOW_GREEN_FOR_DATE, RAINBOW_BLUE_FOR_DATE, RAINBOW_INDIGO_FOR_DATE, RAINBOW_VIOLET_FOR_DATE];
 
 // All digits are drawn here, and can be printed by a loop iteration
 pub const NUMBER : [[[u8; 3]; 5]; 11] = [
@@ -112,10 +133,10 @@ pub struct ClockPaddings{
 #[derive(Parser)]
 #[command(author="Rômulo Moraes", version="0.1.0", about="Digital clock", long_about=None)]
 pub struct ProgramArguments{
-    #[arg(long, short, help=AVAILABLE_COLORS)]
+    #[arg(long, short, help=AVAILABLE_COLORS_FOR_CLOCK)]
     pub clock_color : Option<String>,
 
-    #[arg(long, short, help=AVAILABLE_COLORS)]
+    #[arg(long, short, help=AVAILABLE_COLORS_FOR_DATE)]
     pub date_color : Option<String>,
 
     #[arg(long, short, help="Make the clock be small")]
@@ -123,9 +144,13 @@ pub struct ProgramArguments{
 
 }
 
+// All clock configurations that will be useful at rendering time 
+// are stored here
 #[derive(Clone)]
 pub struct ClockConfig{
     pub clock_color : Option<Color>,
     pub small_clock : bool,
-    pub date_color : Option<Color>
+    pub date_color : Option<Color>,
+    pub rainbow_mode_for_clock : u8,
+    pub rainbow_mode_for_date : bool
 }

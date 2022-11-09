@@ -65,7 +65,31 @@ These are the acceptable colors for the clock's numbers and the date, any color 
     <li>bright_white</li>
 </ul>
 
+### Rainbow modes
+In a new update was added the possibility of select a rainbow theme for both costumizable items: Clock and date. There're two kinds of rainbow themes of clock.
 
+The first is:
+```sh
+--clock-color or -c Rainbow
+```
+
+The second:
+```sh
+--clock-color or -c Rainbow2
+```
+
+And for date rainbow mode there's just one theme:
+
+```sh
+--date-color or -d Rainbow
+```
+
+<br/>
+
+### Rclock using the flags -c Rainbow2 -d Rainbow
+<div align="center">
+    <img src="./assets/Rainbow.png">
+</div>
 
 ## Goodbye
 

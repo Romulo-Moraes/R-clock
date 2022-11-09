@@ -41,6 +41,8 @@ fn print_message_about_no_existence_of_selected_color() {
 pub fn handle_program_arguments(program_arguments: ProgramArguments) -> ClockConfig {
     let mut clock_color: Option<Color> = None;
     let mut date_color: Option<Color> = None;
+    let mut rainbow_mode_for_clock: u8 = 0;
+    let mut rainbow_mode_for_date: bool = false;
 
     // Checking if the option of clock color was triggered
     match program_arguments.clock_color {
@@ -48,13 +50,23 @@ pub fn handle_program_arguments(program_arguments: ProgramArguments) -> ClockCon
             // If the code reaches here, that means that the option was trigerred
 
             // Checking if this color is available
-            clock_color = check_if_color_exists(the_color);
-            match clock_color {
-                // If yes, there's nothing more todo, the color is already saved
-                Some(_) => {}
-                // If not, give a coloful message error
-                None => {
-                    print_message_about_no_existence_of_selected_color();
+            match the_color.as_str() {
+                "Rainbow" => {
+                    rainbow_mode_for_clock = 1;
+                }
+                "Rainbow2" => {
+                    rainbow_mode_for_clock = 2;
+                }
+                &_ => {
+                    clock_color = check_if_color_exists(the_color);
+                    match clock_color {
+                        // If yes, there's nothing more todo, the color is already saved
+                        Some(_) => {}
+                        // If not, give a coloful message error
+                        None => {
+                            print_message_about_no_existence_of_selected_color();
+                        }
+                    }
                 }
             }
         }
@@ -64,12 +76,15 @@ pub fn handle_program_arguments(program_arguments: ProgramArguments) -> ClockCon
     // Same thing here
     match program_arguments.date_color {
         Some(the_color) => {
-
-            date_color = check_if_color_exists(the_color);
-            match date_color {
-                Some(_) => {}
-                None => {
-                    print_message_about_no_existence_of_selected_color();
+            if the_color == "Rainbow" {
+                rainbow_mode_for_date = true;
+            } else {
+                date_color = check_if_color_exists(the_color);
+                match date_color {
+                    Some(_) => {}
+                    None => {
+                        print_message_about_no_existence_of_selected_color();
+                    }
                 }
             }
         }
@@ -80,6 +95,8 @@ pub fn handle_program_arguments(program_arguments: ProgramArguments) -> ClockCon
     return ClockConfig {
         clock_color: clock_color,
         small_clock: program_arguments.small,
-        date_color: date_color
+        date_color: date_color,
+        rainbow_mode_for_clock: rainbow_mode_for_clock,
+        rainbow_mode_for_date: rainbow_mode_for_date,
     };
 }
