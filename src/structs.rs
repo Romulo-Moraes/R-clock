@@ -131,16 +131,34 @@ pub struct ClockPaddings{
 
 // Structure used by clap library to provide a argument parsing
 #[derive(Parser)]
-#[command(author="Rômulo Moraes", version="0.1.0", about="Digital clock", long_about=None)]
+#[command(author="Rômulo Moraes", version="0.3.0", about="Digital clock", long_about=None)]
 pub struct ProgramArguments{
     #[arg(long, short, help=AVAILABLE_COLORS_FOR_CLOCK)]
     pub clock_color : Option<String>,
 
-    #[arg(long, short, help=AVAILABLE_COLORS_FOR_DATE)]
+    #[arg(long, short='d', help=AVAILABLE_COLORS_FOR_DATE)]
     pub date_color : Option<String>,
 
-    #[arg(long, short, help="Make the clock be small")]
-    pub small : bool
+    #[arg(long, short='s', help="Make the clock be small")]
+    pub small : bool,
+
+    #[arg(long, short='H', help="Set a specific hour to clock")]
+    pub hour : Option<u32>,
+
+    #[arg(long, short='m', help="Set a specific minute to clock")]
+    pub minute : Option<u32>,
+
+    #[arg(long, short='S', help="Set a specific second to clock")]
+    pub second : Option<u32>,
+
+    #[arg(long, short='D', help="Set a specific day to clock")]
+    pub day : Option<u32>,
+
+    #[arg(long, short='M', help="Set a specific month to clock")]
+    pub month : Option<u32>,
+
+    #[arg(long, short, help="Set a specific year to clock", allow_hyphen_values=true)]
+    pub year : Option<i32>
 
 }
 
@@ -152,5 +170,11 @@ pub struct ClockConfig{
     pub small_clock : bool,
     pub date_color : Option<Color>,
     pub rainbow_mode_for_clock : u8,
-    pub rainbow_mode_for_date : bool
+    pub rainbow_mode_for_date : bool,
+    pub hour : Option<u32>,
+    pub minute : Option<u32>,
+    pub second : Option<u32>,
+    pub day : Option<u32>,
+    pub month : Option<u32>,
+    pub year : Option<i32>
 }

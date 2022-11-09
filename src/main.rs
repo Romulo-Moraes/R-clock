@@ -15,7 +15,7 @@ use chrono::{DateTime, Local};
 use clap::Parser;
 use crossterm::{cursor::{MoveTo, Hide, Show}, ExecutableCommand};
 use clock::{draw_digital_clock_in_terminal, extract_time_from_date_time_struct};
-use helpers::handle_program_arguments;
+use helpers::{handle_program_arguments, fill_local_time_with_date_and_time};
 use structs::{CurrentTime, TerminalSize, ProgramArguments, ClockConfig};
 use terminal_utilities::{get_terminal_sizes, clear_terminal};
 
@@ -24,13 +24,18 @@ fn main() {
     let program_stop_flag : Arc<Mutex<bool>> = Arc::new(Mutex::new(true));
     let mut stop_flag_to_be_use_in_loop : bool = true;
     let mut program_stop_flag_mutex_guard : MutexGuard<bool>;
-    let mut local_time : DateTime<Local> = Local::now();
+    let mut local_time : DateTime<Local>;
     let mut local_time_splited_in_hours_minutes_and_seconds: CurrentTime;
     let mut screen_sizes : TerminalSize = get_terminal_sizes().unwrap();
     let mut screen_sizes_for_testing : TerminalSize = get_terminal_sizes().unwrap();
     let mut program_stdout : Stdout = stdout();
     let program_argument : ProgramArguments = ProgramArguments::parse();
     let clock_config : ClockConfig = handle_program_arguments(program_argument);
+
+    // Filling the variable that will be used to show the date and time in screen.
+    // This function will check if the user doesn't set a custom time, and if yes 
+    // will pass everything to local_time.
+    local_time = fill_local_time_with_date_and_time(&clock_config);
 
     // This thread will set a boolean inside an Arc<Mutex<>> when the user press enter
     // When this happens the program should stop clock the clock, show cursor and clear terminal  

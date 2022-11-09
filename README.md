@@ -89,5 +89,38 @@ And for date rainbow mode there's just one theme:
     <img src="./assets/Rainbow.png">
 </div>
 
+### Setting a custom date and time
+The Rclock allows you to change the date and time by on your own, and these are the following flags that you can use to do it:
+
+setting a costum hour, the value here can be between 0 and 23
+```sh
+--hour or -H <HOUR>
+```
+
+setting a costum minute, the value here can be between 0 and 59
+```sh
+--minute or -m <MINUTE>
+```
+
+setting a costum second, the value here can be between 0 and 59
+```sh
+--second or -S <SECOND>
+```
+
+setting a costum day, the value here depends of the month
+```sh
+--day or -D <DAY>
+```
+
+setting a costum month, the value here can be between 1 and 12
+```sh
+--month or -M <MONTH>
+```
+
+setting a costum year, the value here can be a negative or positive number
+```sh
+--year or -y <YEAR>
+```
+
 ## Goodbye
 
