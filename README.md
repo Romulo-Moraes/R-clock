@@ -84,8 +84,6 @@ And for date rainbow mode there's just one theme:
 --date-color or -d Rainbow
 ```
 
-<br/>
-
 ### Rclock using the flags -c Rainbow2 -d Rainbow
 <div align="center">
     <img src="./assets/Rainbow.png">
