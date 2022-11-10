@@ -31,11 +31,16 @@ fn main() {
     let mut program_stdout : Stdout = stdout();
     let program_argument : ProgramArguments = ProgramArguments::parse();
     let clock_config : ClockConfig = handle_program_arguments(program_argument);
+    let mut difference_between_now_and_clock : chrono::Duration;
+    let mut checkpoint_time : DateTime<Local>;
 
     // Filling the variable that will be used to show the date and time in screen.
     // This function will check if the user doesn't set a custom time, and if yes 
     // will pass everything to local_time.
     local_time = fill_local_time_with_date_and_time(&clock_config);
+    checkpoint_time = local_time.clone();
+
+    difference_between_now_and_clock = Local::now().signed_duration_since(local_time.clone());
 
     // This thread will set a boolean inside an Arc<Mutex<>> when the user press enter
     // When this happens the program should stop clock the clock, show cursor and clear terminal  
@@ -50,6 +55,22 @@ fn main() {
 
     // Main structure of program, each second the clock update its value
     while stop_flag_to_be_use_in_loop == true{
+
+        // Checking if in some moment the OS made the program sleep, due inactivity or 
+        // a laptop's cover that was down
+        if Local::now().signed_duration_since(local_time).num_seconds() != difference_between_now_and_clock.num_seconds() {
+            
+            // Do a calculation based on current time and last checkpoint time, this will
+            // return the difference between both. The difference will be added to local time
+            // allowing to clock recover the lost time
+            local_time = local_time.checked_add_signed(Local::now().signed_duration_since(checkpoint_time)).unwrap();
+            difference_between_now_and_clock = Local::now().signed_duration_since(local_time.clone());
+        }
+
+        // Save a current time that will be useful to clock back to normal
+        // after the OS wake up the program again
+        checkpoint_time = Local::now();
+
         local_time_splited_in_hours_minutes_and_seconds = extract_time_from_date_time_struct(&local_time);
 
         // If the size of terminal changed on mid way of the program, clear it.
